@@ -5,30 +5,46 @@ import java.util.Scanner;
 public class ColemanLiauIndex {
 
     public static void main(String[] args) {
-        ArrayList<String> arrayArticle = new ArrayList<>();
+        int spaces = 0;
+        int sentences = 0;
+        int letters = 0;
+        int words = 1;
+        int x = 0;
+        int y = 1;
+
         Scanner input = new Scanner(System.in);
         String article = input.nextLine(); //get user file
-        String words[] = article.split(" "); //quebra a frase pelo espaçamento
-        System.out.println("words >>> " + Arrays.toString(words));
-        System.out.println("length words=" + words.length);
 
-        System.out.println("artigo = " + article);
-        System.out.println("char of article = " + article.substring(0, 1));
-
-        int countCharacter = article.length(); //counts the amount of string in the file
-        System.out.println("length of article = " + countCharacter);
-
-        char ch = article.charAt(0);
-        boolean alphaNumeric = Character.isLetterOrDigit(ch); //check if it is alphanumeric
-
-        System.out.println("ch=" + ch + " alphaN=" + alphaNumeric);
 
         for (int i = 0; i < article.length(); i++) {
-            arrayArticle.add(article.substring(i, i + 1));
+            if (article.substring(x, y).equals(" ")) {
+                spaces++;
+                words++;
+//                System.out.println(article.substring(x, y));
+            } else if (article.substring(x, y).equals(":") || article.substring(x, y).equals("!") ||
+                    article.substring(x, y).equals("?") || article.substring(x, y).equals(".")) {
+                sentences++;
+//                System.out.println(article.substring(x, y));
+            } else {
+                letters++;
+//                System.out.println(article.substring(x, y));
+            }
+            x++;
+            y++;
         }
 
-        System.out.println(arrayArticle);
 
-        input.close();
+        System.out.println("letters > " + letters);
+        System.out.println("words > " + words);
+        System.out.println("setences > " + sentences);
+        System.out.println("spaces > " + spaces);
+
+        int index = (int) (0.0588 * (100 * letters / words) - 0.296 * (100 * sentences / words) - 15.8);
+
+        if (index > 16) {
+            System.out.println("Grade 16+");
+        } else {
+            System.out.println("Grade " + index);
+        }
     }
 }
